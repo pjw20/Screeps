@@ -41,12 +41,12 @@ module.exports.loop = function ()
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "harvester", curRoom);
             }
-            else if (curRoom.memory.numUpgraders < (curRoom.memory.sources.length + 1))
+            else if (curRoom.memory.numUpgraders < curRoom.memory.sources.length)
             {
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "upgrader", curRoom);
             }
-            else if (curRoom.memory.numHaulers < curRoom.memory.sources.length)
+            else if (curRoom.memory.numHaulers < 1)
             {
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "hauler", curRoom);
