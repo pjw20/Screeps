@@ -9,6 +9,7 @@ let rHaul = require("haul");
 
 module.exports.loop = function ()
 {
+    var startCPU = Game.cpu.getUsed();
     let needCreeps = false;
     //delete old creep memory
     for(let name in Memory.creeps)
@@ -58,6 +59,11 @@ module.exports.loop = function ()
         }
     }
 
+    var endSpawnCPU = Game.cpu.getUsed();
+    if ((endSpawnCPU - startCPU) > 5)
+    {
+        console.log("WARNING: SPAWN CPU SPIKE - " + (endSpawnCPU - startCPU) + " CPU");
+    }
     for (let name in Game.creeps) //gets name
     {
         let creep = Game.creeps[name]; //gets object
@@ -79,5 +85,10 @@ module.exports.loop = function ()
             default:
                 break;
         }
+    }
+    var endCreepCPU = Game.cpu.getUsed();
+    if ((endCreepCPU - endSpawnCPU) > 5)
+    {
+        console.log("WARNING: CREEP CPU SPIKE - " + (endCreepCPU - endSpawnCPU) + " CPU");
     }
 };

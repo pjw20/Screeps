@@ -45,18 +45,4 @@ module.exports.run = function(creep)
             }
         }
     }
-/*
-
-    console.log(containers.length);
-
-    for (let container of containers)
-    {
-        //console.log(container);
-        for (let i = 0; i < container.room.memory.sources.length; i++)
-        {
-
-        }
-        //console.log(container.pos.getRangeTo(container.room.memory.sources[0]));
-    }
-*/
 };

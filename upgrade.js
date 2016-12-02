@@ -5,6 +5,20 @@ module.exports.run = function(creep, needCreeps)
         //we are not full
         if (creep.room.energyAvailable >= 100 && needCreeps == false)
         {
+            let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0)});
+
+            for (let container of containers)
+            {
+                if (creep.pos.getRangeTo(container) < 2)
+                {
+                    if (creep.withdraw(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                    {
+                        creep.moveTo(containers[0]);
+                    }
+                    return;
+                }
+            }
+
             let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && o.store[RESOURCE_ENERGY] > 0});
             if (target)
             {

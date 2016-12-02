@@ -16,14 +16,11 @@ module.exports.run = function(creep)
         {
             var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] < o.storeCapacity) && o.isActive() == true});
 
-            if (!target)
-            {
-                target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION) && (o.energy < o.energyCapacity) ||
-                (o.structureType == STRUCTURE_SPAWN) && (o.energy < o.energyCapacity)});
-            }
         }
-        else
+
+        if (!target)
         {
+            //console.log(target);
             target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION) && (o.energy < o.energyCapacity) ||
             (o.structureType == STRUCTURE_SPAWN) && (o.energy < o.energyCapacity)});
         }
