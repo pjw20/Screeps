@@ -1,4 +1,4 @@
-//require stuff - slight git edit
+//require stuff
 let rSpawn = require("spawn");
 let rCreep = require("creep");
 let rHarvest = require("harvest");
