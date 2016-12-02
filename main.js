@@ -1,4 +1,4 @@
-//require stuff - adding
+//require stuff - test sync
 let rSpawn = require("spawn");
 let rCreep = require("creep");
 let rHarvest = require("harvest");
