@@ -1,0 +1,62 @@
+module.exports.run = function(creep)
+{
+    //move energy from top container to spawn / extensions / tower
+    //if those are full already, move it to bottom container
+
+    if (!creep.memory.working)
+    {
+        //we are not full
+        //get containers which within 2 squares to source and not empty
+        let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES_ACTIVE, 2).length != 0) && (o.store[RESOURCE_ENERGY] > 0)});
+        containers.sort((a,b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
+        if (creep.withdraw(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+        {
+            creep.moveTo(containers[0]);
+        }
+    }
+    else
+    {
+        //we are full
+        if (creep.pos.lookFor(LOOK_CONSTRUCTION_SITES).length == 0)
+        {
+            //console.log("no road here");
+            creep.pos.createConstructionSite(STRUCTURE_ROAD);
+        }
+        let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION) && (o.energy < o.energyCapacity) ||
+                                                                                    (o.structureType == STRUCTURE_TOWER) && (o.energy < o.energyCapacity) ||
+                                                                                    (o.structureType == STRUCTURE_SPAWN) && (o.energy < o.energyCapacity)});
+        if (target)
+        {
+            if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+            {
+                creep.moveTo(target);
+
+            }
+        }
+        else
+        {
+            //get containers which not within 2 squares to source
+            let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES_ACTIVE, 2).length == 0)});
+            containers.sort((a,b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
+            if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+            {
+                creep.moveTo(containers[0]);
+
+            }
+        }
+    }
+/*
+
+    console.log(containers.length);
+
+    for (let container of containers)
+    {
+        //console.log(container);
+        for (let i = 0; i < container.room.memory.sources.length; i++)
+        {
+
+        }
+        //console.log(container.pos.getRangeTo(container.room.memory.sources[0]));
+    }
+*/
+};
