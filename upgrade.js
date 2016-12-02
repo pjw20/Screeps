@@ -3,9 +3,9 @@ module.exports.run = function(creep, needCreeps)
     if (!creep.memory.working)
     {
         //we are not full
-        if (creep.room.energyAvailable >= 100 && needCreeps == false)
+        if (needCreeps == false)
         {
-            let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0)});
+            let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0) && (o.isActive() == true)});
 
             for (let container of containers)
             {
@@ -19,7 +19,7 @@ module.exports.run = function(creep, needCreeps)
                 }
             }
 
-            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && o.store[RESOURCE_ENERGY] > 0});
+            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0) && (o.isActive() == true)});
             if (target)
             {
                 if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)

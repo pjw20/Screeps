@@ -7,7 +7,8 @@ module.exports.run = function(creep)
     {
         //we are not full
         //get containers which within 2 squares to source and not empty
-        let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES_ACTIVE, 2).length != 0) && (o.store[RESOURCE_ENERGY] > 0)});
+        let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES_ACTIVE, 2).length != 0) &&
+                                                                            (o.store[RESOURCE_ENERGY] > 0) && (o.isActive() == true)});
         containers.sort((a,b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
         if (creep.withdraw(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
         {
