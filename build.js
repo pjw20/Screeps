@@ -16,7 +16,7 @@ module.exports.run = function(creep, needCreeps)
                 return;
             }
         }
-        if (creep.room.energyAvailable >= 50 && needCreeps == false)
+        if (/*creep.room.energyAvailable >= 100 && */needCreeps == false)
         {
             let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && o.energy > 0});
             if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)

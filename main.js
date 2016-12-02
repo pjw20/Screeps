@@ -66,6 +66,7 @@ module.exports.loop = function ()
     }
     for (let name in Game.creeps) //gets name
     {
+        var curCreepCPUStart = Game.cpu.getUsed();
         let creep = Game.creeps[name]; //gets object
         rCreep.run(creep);
         switch (creep.memory.role)
@@ -84,6 +85,11 @@ module.exports.loop = function ()
                 break;
             default:
                 break;
+        }
+        var curCreepCPUEnd = Game.cpu.getUsed();
+        if ((curCreepCPUEnd-curCreepCPUStart) > 1)
+        {
+            console.log("WARNING: CURRENT CREEP (" + creep.memory.role + ") CPU SPIKE - " + (curCreepCPUEnd-curCreepCPUStart) + " CPU")
         }
     }
     var endCreepCPU = Game.cpu.getUsed();
