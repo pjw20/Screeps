@@ -12,14 +12,14 @@ module.exports.run = function(creep)
             {
                 creep.moveTo(Game.getObjectById(creep.memory.target));
             }
-            else if (result == OK || result == ERR_NOT_OWNER || result == ERR_INVALID_TARGET)
+            else if (result == OK || result == ERR_INVALID_TARGET)
             {
                 creep.memory.target = 0;
             }
             return;
         }
         //we are not full
-        //get containers which within 2 squares to source and not empty
+        //get containers which within 2 squares to source
         let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length != 0) &&
                                                                             (o.store[RESOURCE_ENERGY] > creep.carryCapacity) && (o.isActive() == true)});
         if (containers.length > 0)
@@ -34,7 +34,6 @@ module.exports.run = function(creep)
 
             if (!creep.memory.target)
             {
-                //let container = creep.pos.findClosestByPath(containers);
                 creep.memory.target = creep.pos.findClosestByPath(containers).id;
             }
             let result = creep.withdraw(Game.getObjectById(creep.memory.target), RESOURCE_ENERGY);
@@ -42,7 +41,7 @@ module.exports.run = function(creep)
             {
                 creep.moveTo(Game.getObjectById(creep.memory.target));
             }
-            else if (result == OK || result == ERR_NOT_OWNER || result == ERR_INVALID_TARGET)
+            else if (result == OK || result == ERR_INVALID_TARGET)
             {
                 creep.memory.target = 0;
             }
@@ -59,7 +58,7 @@ module.exports.run = function(creep)
             {
                 creep.moveTo(Game.getObjectById(creep.memory.target));
             }
-            else if (result == OK || result == ERR_NOT_OWNER || result == ERR_INVALID_TARGET || result == ERR_FULL)
+            else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_FULL)
             {
                 creep.memory.target = 0;
             }
@@ -82,7 +81,7 @@ module.exports.run = function(creep)
             {
                 creep.moveTo(target);
             }
-            else if (result == OK || result == ERR_NOT_OWNER || result == ERR_INVALID_TARGET || result == ERR_FULL)
+            else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_FULL)
             {
                 creep.memory.target = 0;
             }

@@ -12,7 +12,7 @@ module.exports.run = function(creep, needCreeps)
                 {
                     creep.moveTo(Game.getObjectById(creep.memory.target));
                 }
-                else if (result == OK || result == ERR_NOT_OWNER || result == ERR_INVALID_TARGET)
+                else if (result == OK || result == ERR_INVALID_TARGET)
                 {
                     creep.memory.target = 0;
                 }
@@ -22,7 +22,7 @@ module.exports.run = function(creep, needCreeps)
 
             for (let container of containers)
             {
-                if (creep.pos.getRangeTo(container) < 2)
+                if (creep.pos.getRangeTo(container) < 3)
                 {
                     creep.memory.target = container.id;
                     let result = creep.withdraw(container, RESOURCE_ENERGY);
@@ -30,7 +30,7 @@ module.exports.run = function(creep, needCreeps)
                     {
                         creep.moveTo(container);
                     }
-                    else if (result == OK || result == ERR_NOT_OWNER || result == ERR_INVALID_TARGET)
+                    else if (result == OK || result == ERR_INVALID_TARGET)
                     {
                         creep.memory.target = 0;
                     }
@@ -48,7 +48,7 @@ module.exports.run = function(creep, needCreeps)
                 {
                     creep.moveTo(target);
                 }
-                else if (result == OK || result == ERR_NOT_OWNER || result == ERR_INVALID_TARGET)
+                else if (result == OK || result == ERR_INVALID_TARGET)
                 {
                     creep.memory.target = 0;
                 }

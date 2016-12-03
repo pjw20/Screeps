@@ -3,35 +3,54 @@ module.exports.run = function(creep, needCreeps)
     if (!creep.memory.working)
     {
         //we are not full
+        if (creep.memory.target)
+        {
+            let result = creep.withdraw(Game.getObjectById(creep.memory.target), RESOURCE_ENERGY);
+            if (result == ERR_NOT_IN_RANGE)
+            {
+                creep.moveTo(Game.getObjectById(creep.memory.target));
+            }
+            else if (result == OK || result == ERR_INVALID_TARGET)
+            {
+                creep.memory.target = 0;
+            }
+            return;
+        }
         let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length != 0)});
         if (containers.length > 0)
         {
             let container = creep.pos.findClosestByPath(containers);
-            if (container.store[RESOURCE_ENERGY] > creep.carryCapacity)
+            if (container.store[RESOURCE_ENERGY] > (container.storeCapacity / 4))
             {
-                if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                creep.memory.target = container.id;
+                let result = creep.withdraw(container, RESOURCE_ENERGY);
+                if (result == ERR_NOT_IN_RANGE)
                 {
                     creep.moveTo(container);
                 }
-                return;
-            }
-            /*
-            containers.sort((a,b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
-            if (containers && (containers[0].store[RESOURCE_ENERGY] > (creep.carryCapacity*2)))
-            {
-                if (creep.withdraw(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                else if (result == OK || result == ERR_INVALID_TARGET)
                 {
-                    creep.moveTo(containers[0]);
+                    creep.memory.target = 0;
                 }
                 return;
-            }*/
+            }
         }
         if (needCreeps == false)
         {
             let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && o.energy > 0});
-            if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+            if (target)
             {
-                creep.moveTo(target);
+                creep.memory.target = target.id;
+                let result = creep.withdraw(target, RESOURCE_ENERGY);
+                if (result == ERR_NOT_IN_RANGE)
+                {
+                    creep.moveTo(target);
+                }
+                else if (result == OK || result == ERR_INVALID_TARGET)
+                {
+                    creep.memory.target = 0;
+                }
+                return;
             }
         }
         else
@@ -45,34 +64,68 @@ module.exports.run = function(creep, needCreeps)
     }
     else
     {
+        if (creep.memory.target)
+        {
+            let result = creep.build(Game.getObjectById(creep.memory.target));
+            if (result == ERR_NOT_IN_RANGE)
+            {
+                creep.moveTo(Game.getObjectById(creep.memory.target));
+            }
+            else if (result == OK || result == ERR_INVALID_TARGET)
+            {
+                creep.memory.target = 0;
+            }
+            return;
+        }
         //we are full
         let target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES, {filter: (o) => o.structureType == STRUCTURE_TOWER});
         if (target)
         {
-            if (creep.build(target) == ERR_NOT_IN_RANGE)
+            creep.memory.target = target.id;
+            let result = creep.build(target);
+            if (result == ERR_NOT_IN_RANGE)
             {
                 creep.moveTo(target);
             }
+            else if (result == OK || result == ERR_INVALID_TARGET)
+            {
+                creep.memory.target = 0;
+            }
+            return;
         }
         else
         {
             let target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES, {filter: (o) => o.structureType == STRUCTURE_EXTENSION});
             if (target)
             {
-                if (creep.build(target) == ERR_NOT_IN_RANGE)
+                creep.memory.target = target.id;
+                let result = creep.build(target);
+                if (result == ERR_NOT_IN_RANGE)
                 {
                     creep.moveTo(target);
                 }
+                else if (result == OK || result == ERR_INVALID_TARGET)
+                {
+                    creep.memory.target = 0;
+                }
+                return;
             }
             else
             {
                 let target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES, {filter: (o) => o.structureType == STRUCTURE_ROAD});
                 if (target)
                 {
-                    if (creep.build(target) == ERR_NOT_IN_RANGE)
+                    creep.memory.target = target.id;
+                    let result = creep.build(target);
+                    if (result == ERR_NOT_IN_RANGE)
                     {
                         creep.moveTo(target);
                     }
+                    else if (result == OK || result == ERR_INVALID_TARGET)
+                    {
+                        creep.memory.target = 0;
+                    }
+                    return;
                 }
                 else
                 {
@@ -81,9 +134,17 @@ module.exports.run = function(creep, needCreeps)
                                                                                                     o.structureType == STRUCTURE_WALL});
                     if (target)
                     {
-                        if (creep.build(target) == ERR_NOT_IN_RANGE) {
+                        creep.memory.target = target.id;
+                        let result = creep.build(target);
+                        if (result == ERR_NOT_IN_RANGE)
+                        {
                             creep.moveTo(target);
                         }
+                        else if (result == OK || result == ERR_INVALID_TARGET)
+                        {
+                            creep.memory.target = 0;
+                        }
+                        return;
                     }
                     else
                     {
