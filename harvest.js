@@ -29,10 +29,22 @@ module.exports.run = function(creep)
                                                                                     (o.structureType == STRUCTURE_SPAWN) && (o.energy < o.energyCapacity)});
         }
 
-        //TODO: what to do if all structures are full
-        if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+        if (target)
         {
-            creep.moveTo(target);
+            if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+            {
+                creep.moveTo(target);
+            }
+        }
+        else
+        {
+            if(creep.room.controller)
+            {
+                if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE)
+                {
+                    creep.moveTo(creep.room.controller);
+                }
+            }
         }
     }
 };
