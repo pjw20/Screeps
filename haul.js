@@ -90,9 +90,7 @@ module.exports.run = function(creep)
         }
         else
         {
-            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION) && (o.energy < o.energyCapacity) ||
-            (o.structureType == STRUCTURE_TOWER) && (o.energy < (o.energyCapacity - 200)) ||
-            (o.structureType == STRUCTURE_SPAWN) && (o.energy < o.energyCapacity)});
+            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_TOWER) && (o.energy < o.energyCapacity)});
             if (target)
             {
                 creep.memory.target = target.id;
