@@ -16,7 +16,7 @@ module.exports.run = function(creep, needCreeps)
             }
             return;
         }
-        let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length != 0)});
+        let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER)});
         if (containers.length > 0)
         {
             let container = creep.pos.findClosestByPath(containers);
