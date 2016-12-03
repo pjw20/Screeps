@@ -31,9 +31,12 @@ module.exports.run = function(curRoom)
 
             if (targets.length)
             {
-                for (let tower of towers)
+                if (targets[0].hits < 10000)
                 {
-                    tower.repair(targets[0]);
+                    for (let tower of towers)
+                    {
+                        tower.repair(targets[0]);
+                    }
                 }
             }
         }
