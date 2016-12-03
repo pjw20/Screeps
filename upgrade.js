@@ -39,7 +39,7 @@ module.exports.run = function(creep, needCreeps)
             }
 
             let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => ((o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0) && (o.isActive() == true)) ||
-                                                                                    (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && (o.energy > 0)});
+                                                                                    (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && (o.energy > 1)});
             if (target)
             {
                 creep.memory.target = target.id;
