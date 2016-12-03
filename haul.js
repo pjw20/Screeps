@@ -72,8 +72,8 @@ module.exports.run = function(creep)
         }
 
         let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION) && (o.energy < o.energyCapacity) ||
-                                                                                    (o.structureType == STRUCTURE_TOWER) && (o.energy < (o.energyCapacity - 200)) ||
                                                                                     (o.structureType == STRUCTURE_SPAWN) && (o.energy < o.energyCapacity)});
+
         if (target)
         {
             creep.memory.target = target.id;
@@ -90,13 +90,33 @@ module.exports.run = function(creep)
         }
         else
         {
-            //get containers which not within 2 squares to source
-            let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length == 0)});
-            containers.sort((a,b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
-            if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION) && (o.energy < o.energyCapacity) ||
+            (o.structureType == STRUCTURE_TOWER) && (o.energy < (o.energyCapacity - 200)) ||
+            (o.structureType == STRUCTURE_SPAWN) && (o.energy < o.energyCapacity)});
+            if (target)
             {
-                creep.moveTo(containers[0]);
+                creep.memory.target = target.id;
+                let result = creep.transfer(target, RESOURCE_ENERGY);
+                if (result == ERR_NOT_IN_RANGE)
+                {
+                    creep.moveTo(target);
+                }
+                else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_FULL)
+                {
+                    creep.memory.target = 0;
+                }
+                return;
+            }
+            else
+            {
+                //get containers which not within 2 squares to source
+                let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length == 0)});
+                containers.sort((a,b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
+                if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                {
+                    creep.moveTo(containers[0]);
 
+                }
             }
         }
     }
