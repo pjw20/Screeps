@@ -27,16 +27,14 @@ module.exports.run = function(creep)
         {
             for (let container of containers)
             {
-                if (container.store[RESOURCE_ENERGY] > (container.storeCapacity - 100))
+                if (container.store[RESOURCE_ENERGY] > (container.storeCapacity - 300))
                 {
-                    console.log("1");
                     creep.memory.target = container.id;
                 }
             }
 
             if (!creep.memory.target)
             {
-                console.log("2");
                 creep.memory.target = creep.pos.findClosestByPath(containers).id;
             }
             let result = creep.withdraw(Game.getObjectById(creep.memory.target), RESOURCE_ENERGY);
