@@ -29,6 +29,9 @@ module.exports.loop = function ()
         {
             //we own the room
             Memory.numRoomsOwned++;
+
+            rTower.run(curRoom);
+
             //find number of sources
             curRoom.memory.sources = curRoom.find(FIND_SOURCES);
             curRoom.memory.numHarvesters = _.sum(Game.creeps, (o) => o.memory.role =="harvester");
