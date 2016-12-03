@@ -71,8 +71,9 @@ module.exports.run = function(creep)
             creep.pos.createConstructionSite(STRUCTURE_ROAD);
         }
 
-        let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION) && (o.energy < o.energyCapacity) ||
-                                                                                    (o.structureType == STRUCTURE_SPAWN) && (o.energy < o.energyCapacity)});
+        let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION && (o.energy < o.energyCapacity)) ||
+                                                                                    (o.structureType == STRUCTURE_SPAWN && (o.energy < o.energyCapacity)) ||
+                                                                                    (o.structureType == STRUCTURE_TOWER && (o.energy < 100))});
 
         if (target)
         {
