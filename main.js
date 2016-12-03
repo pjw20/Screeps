@@ -69,7 +69,7 @@ module.exports.loop = function ()
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "upgrader", curRoom);
             }
-            else if (curRoom.memory.numHaulers < (curRoom.memory.sources.length + 1)
+            else if (curRoom.memory.numHaulers < (curRoom.memory.sources.length + 1))
             {
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "hauler", curRoom);
