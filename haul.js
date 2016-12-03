@@ -27,7 +27,7 @@ module.exports.run = function(creep)
         {
             for (let container of containers)
             {
-                if (container.store[RESOURCE_ENERGY] == (container.storeCapacity - 100))
+                if (container.store[RESOURCE_ENERGY] > (container.storeCapacity - 100))
                 {
                     creep.memory.target = container.id;
                 }
