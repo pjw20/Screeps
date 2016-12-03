@@ -5,35 +5,56 @@ module.exports.run = function(creep, needCreeps)
         //we are not full
         if (needCreeps == false)
         {
+            if (creep.memory.target)
+            {
+                let result = creep.withdraw(Game.getObjectById(creep.memory.target), RESOURCE_ENERGY);
+                if (result == ERR_NOT_IN_RANGE)
+                {
+                    creep.moveTo(Game.getObjectById(creep.memory.target));
+                }
+                else if (result == 0)
+                {
+                    creep.memory.target = 0;
+                }
+                return;
+            }
             let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0) && (o.isActive() == true)});
 
             for (let container of containers)
             {
                 if (creep.pos.getRangeTo(container) < 2)
                 {
-                    if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                    creep.memory.target = container.id;
+                    console.log(creep.memory.target);
+                    let result = creep.withdraw(container, RESOURCE_ENERGY);
+                    if (result == ERR_NOT_IN_RANGE)
                     {
                         creep.moveTo(container);
+                    }
+                    else if (result == 0)
+                    {
+                        creep.memory.target = 0;
                     }
                     return;
                 }
             }
 
-            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0) && (o.isActive() == true)});
+            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => ((o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0) && (o.isActive() == true)) ||
+                                                                                    (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && (o.energy > 0)});
             if (target)
             {
-                if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                creep.memory.target = target.id;
+                console.log(creep.memory.target);
+                let result = creep.withdraw(target, RESOURCE_ENERGY);
+                if (result == ERR_NOT_IN_RANGE)
                 {
                     creep.moveTo(target);
                 }
-            }
-            else
-            {
-                let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && o.energy > 0});
-                if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                else if (result == 0)
                 {
-                    creep.moveTo(target);
+                    creep.memory.target = 0;
                 }
+                return;
             }
         }
         else
