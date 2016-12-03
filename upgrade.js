@@ -11,9 +11,9 @@ module.exports.run = function(creep, needCreeps)
             {
                 if (creep.pos.getRangeTo(container) < 2)
                 {
-                    if (creep.withdraw(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                    if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
                     {
-                        creep.moveTo(containers[0]);
+                        creep.moveTo(container);
                     }
                     return;
                 }
