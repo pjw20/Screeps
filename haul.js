@@ -20,6 +20,18 @@ module.exports.run = function(creep)
         }
         //we are not full
         //get containers which within 2 squares to source
+
+        let target = creep.room.find(FIND_DROPPED_ENERGY);
+        console.log(target);
+        if (target)
+        {
+            let result = creep.pickup(target[0]);
+            if (result == ERR_NOT_IN_RANGE)
+            {
+                creep.moveTo(target[0]);
+            }
+            return;
+        }
         let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length != 0) &&
                                                                             (o.store[RESOURCE_ENERGY] > creep.carryCapacity) && (o.isActive() == true)});
         if (containers.length > 0)
