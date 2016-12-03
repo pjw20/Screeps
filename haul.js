@@ -40,7 +40,7 @@ module.exports.run = function(creep)
             let result = creep.withdraw(Game.getObjectById(creep.memory.target), RESOURCE_ENERGY);
             if (result == ERR_NOT_IN_RANGE)
             {
-                creep.moveTo(container);
+                creep.moveTo(Game.getObjectById(creep.memory.target));
             }
             else if (result == OK || result == ERR_NOT_OWNER || result == ERR_INVALID_TARGET)
             {
