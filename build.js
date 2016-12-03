@@ -26,7 +26,7 @@ module.exports.run = function(creep, needCreeps)
                 return;
             }*/
         }
-        if (/*creep.room.energyAvailable >= 100 && */needCreeps == false)
+        if (needCreeps == false)
         {
             let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && o.energy > 0});
             if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
@@ -66,9 +66,7 @@ module.exports.run = function(creep, needCreeps)
             }
             else
             {
-                let target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES, {filter: (o) => o.structureType == STRUCTURE_CONTAINER ||
-                                                                                                o.structureType == STRUCTURE_STORAGE || o.structureType == STRUCTURE_RAMPART || o.structureType == STRUCTURE_ROAD ||
-                                                                                                o.structureType == STRUCTURE_WALL});
+                let target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES, {filter: (o) => o.structureType == STRUCTURE_ROAD});
                 if (target)
                 {
                     if (creep.build(target) == ERR_NOT_IN_RANGE)
@@ -78,16 +76,28 @@ module.exports.run = function(creep, needCreeps)
                 }
                 else
                 {
-                    //nothing to build, lets repair
-                    let targets = creep.room.find(FIND_STRUCTURES, {filter: (o) => o.hits < o.hitsMax});
-
-                    targets.sort((a,b) => a.hits - b.hits); //this sorts the array in ascending numbers by hits
-
-                    if (targets.length)
+                    let target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES, {filter: (o) => o.structureType == STRUCTURE_CONTAINER ||
+                                                                                                    o.structureType == STRUCTURE_STORAGE || o.structureType == STRUCTURE_RAMPART ||
+                                                                                                    o.structureType == STRUCTURE_WALL});
+                    if (target)
                     {
-                        if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE)
+                        if (creep.build(target) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(target);
+                        }
+                    }
+                    else
+                    {
+                        //nothing to build, lets repair
+                        let targets = creep.room.find(FIND_STRUCTURES, {filter: (o) => o.hits < o.hitsMax});
+
+                        targets.sort((a,b) => a.hits - b.hits); //this sorts the array in ascending numbers by hits
+
+                        if (targets.length)
                         {
-                            creep.moveTo(targets[0]);
+                            if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE)
+                            {
+                                creep.moveTo(targets[0]);
+                            }
                         }
                     }
                 }
