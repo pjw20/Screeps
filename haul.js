@@ -24,10 +24,20 @@ module.exports.run = function(creep)
                                                                             (o.store[RESOURCE_ENERGY] > creep.carryCapacity) && (o.isActive() == true)});
         if (containers.length > 0)
         {
-            let container = creep.pos.findClosestByPath(containers);
-            //containers.sort((a,b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
-            creep.memory.target = container.id;
-            let result = creep.withdraw(container, RESOURCE_ENERGY);
+            for (let container of containers)
+            {
+                if (container.store[RESOURCE_ENERGY] > (container.storeCapacity - 100))
+                {
+                    creep.memory.target = container.id;
+                }
+            }
+
+            if (!creep.memory.target)
+            {
+                //let container = creep.pos.findClosestByPath(containers);
+                creep.memory.target = creep.pos.findClosestByPath(containers).id;
+            }
+            let result = creep.withdraw(Game.getObjectById(creep.memory.target), RESOURCE_ENERGY);
             if (result == ERR_NOT_IN_RANGE)
             {
                 creep.moveTo(container);
@@ -60,6 +70,7 @@ module.exports.run = function(creep)
             //console.log("no road here");
             creep.pos.createConstructionSite(STRUCTURE_ROAD);
         }
+
         let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION) && (o.energy < o.energyCapacity) ||
                                                                                     (o.structureType == STRUCTURE_TOWER) && (o.energy < o.energyCapacity) ||
                                                                                     (o.structureType == STRUCTURE_SPAWN) && (o.energy < o.energyCapacity)});
@@ -80,9 +91,7 @@ module.exports.run = function(creep)
         else
         {
             //get containers which not within 2 squares to source
-            console.log("here");
             let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length == 0)});
-            console.log(containers);
             containers.sort((a,b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
             if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
             {
