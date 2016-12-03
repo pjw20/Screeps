@@ -17,37 +17,10 @@ module.exports.run = function(energy, creepRole, curRoom)
 
     let newCreep = [];
 
-    if (creepRole == "harvester")
+    if (creepRole == "harvester" || creepRole == "builder")
     {
         while (energy > 0)
         {
-            if (energy >= 100)
-            {
-                newCreep.push(WORK);
-                energy -= 100;
-            }
-            if (energy >= 50)
-            {
-                newCreep.push(CARRY);
-                energy -= 50;
-            }
-            if (energy >= 50)
-            {
-                newCreep.push(MOVE);
-                energy -= 50;
-            }
-        }
-    }
-
-    if (creepRole == "builder")
-    {
-        while (energy > 0)
-        {
-            if (energy >= 100)
-            {
-                newCreep.push(WORK);
-                energy -= 100;
-            }
             if (energy >= 100)
             {
                 newCreep.push(WORK);

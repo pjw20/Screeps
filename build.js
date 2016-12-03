@@ -6,6 +6,16 @@ module.exports.run = function(creep, needCreeps)
         let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES_ACTIVE, 2).length != 0)});
         if (containers.length > 0)
         {
+            let container = creep.pos.findClosestByPath(containers);
+            if (container.store[RESOURCE_ENERGY] > creep.carryCapacity)
+            {
+                if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                {
+                    creep.moveTo(container);
+                }
+                return;
+            }
+            /*
             containers.sort((a,b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
             if (containers && (containers[0].store[RESOURCE_ENERGY] > (creep.carryCapacity*2)))
             {
@@ -14,7 +24,7 @@ module.exports.run = function(creep, needCreeps)
                     creep.moveTo(containers[0]);
                 }
                 return;
-            }
+            }*/
         }
         if (/*creep.room.energyAvailable >= 100 && */needCreeps == false)
         {
