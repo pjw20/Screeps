@@ -10,7 +10,7 @@ module.exports.run = function(creep, needCreeps)
             {
                 creep.moveTo(Game.getObjectById(creep.memory.target));
             }
-            else if (result == OK || result == ERR_INVALID_TARGET)
+            else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_NOT_ENOUGH_RESOURCES)
             {
                 creep.memory.target = 0;
             }
@@ -28,7 +28,7 @@ module.exports.run = function(creep, needCreeps)
                 {
                     creep.moveTo(container);
                 }
-                else if (result == OK || result == ERR_INVALID_TARGET)
+                else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_NOT_ENOUGH_RESOURCES)
                 {
                     creep.memory.target = 0;
                 }
@@ -46,19 +46,11 @@ module.exports.run = function(creep, needCreeps)
                 {
                     creep.moveTo(target);
                 }
-                else if (result == OK || result == ERR_INVALID_TARGET)
+                else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_NOT_ENOUGH_RESOURCES)
                 {
                     creep.memory.target = 0;
                 }
                 return;
-            }
-        }
-        else
-        {
-            let source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
-            if (creep.harvest(source) == ERR_NOT_IN_RANGE)
-            {
-                creep.moveTo(source);
             }
         }
     }

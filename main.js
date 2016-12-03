@@ -5,6 +5,7 @@ let rHarvest = require("harvest");
 let rUpgrade = require("upgrade");
 let rBuild = require("build");
 let rHaul = require("haul");
+let rTower = require("tower");
 
 
 module.exports.loop = function ()
@@ -35,9 +36,8 @@ module.exports.loop = function ()
             curRoom.memory.numUpgraders = _.sum(Game.creeps, (o) => o.memory.role =="upgrader");
             curRoom.memory.numHaulers = _.sum(Game.creeps, (o) => o.memory.role =="hauler");
 
-            if (curRoom.memory.numHarvesters < (curRoom.memory.sources.length + 1))
+            if (curRoom.memory.numHarvesters < curRoom.memory.sources.length)
             {
-                //we need more harvesters in this room
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "harvester", curRoom);
             }
@@ -46,12 +46,32 @@ module.exports.loop = function ()
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "upgrader", curRoom);
             }
-            else if (curRoom.memory.numHaulers < (curRoom.memory.sources.length))
+            else if (curRoom.memory.numHaulers < 1)
             {
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "hauler", curRoom);
             }
-            else if (curRoom.memory.numBuilders < 2)
+            else if (curRoom.memory.numBuilders < 1)
+            {
+                needCreeps = true;
+                rSpawn.run(curRoom.energyCapacityAvailable, "builder", curRoom);
+            }
+            else if (curRoom.memory.numHarvesters < (curRoom.memory.sources.length + 1))
+            {
+                needCreeps = true;
+                rSpawn.run(curRoom.energyCapacityAvailable, "harvester", curRoom);
+            }
+            else if (curRoom.memory.numUpgraders < (curRoom.memory.sources.length + 1))
+            {
+                needCreeps = true;
+                rSpawn.run(curRoom.energyCapacityAvailable, "upgrader", curRoom);
+            }
+            else if (curRoom.memory.numHaulers < curRoom.memory.sources.length)
+            {
+                needCreeps = true;
+                rSpawn.run(curRoom.energyCapacityAvailable, "hauler", curRoom);
+            }
+            else if (curRoom.memory.numBuilders < curRoom.memory.sources.length)
             {
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "builder", curRoom);

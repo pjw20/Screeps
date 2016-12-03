@@ -12,7 +12,7 @@ module.exports.run = function(creep)
             {
                 creep.moveTo(Game.getObjectById(creep.memory.target));
             }
-            else if (result == OK || result == ERR_INVALID_TARGET)
+            else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_NOT_ENOUGH_RESOURCES)
             {
                 creep.memory.target = 0;
             }
@@ -41,7 +41,7 @@ module.exports.run = function(creep)
             {
                 creep.moveTo(Game.getObjectById(creep.memory.target));
             }
-            else if (result == OK || result == ERR_INVALID_TARGET)
+            else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_NOT_ENOUGH_RESOURCES)
             {
                 creep.memory.target = 0;
             }
