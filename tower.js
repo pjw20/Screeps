@@ -31,7 +31,7 @@ module.exports.run = function(curRoom)
 
             if (targets.length)
             {
-                if (targets[0].hits < 10000)
+                if (targets[0].hits < 50000)
                 {
                     for (let tower of towers)
                     {
