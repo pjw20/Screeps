@@ -141,7 +141,7 @@ module.exports.run = function(creep, needCreeps)
                     else
                     {
                         //nothing to build, lets repair
-                        let targets = creep.room.find(FIND_STRUCTURES, {filter: (o) => o.hits < o.hitsMax});
+                        let targets = creep.room.find(FIND_STRUCTURES, {filter: (o) => o.structureType != STRUCTURE_WALL && (o.hits < o.hitsMax)});
 
                         targets.sort((a,b) => a.hits - b.hits); //this sorts the array in ascending numbers by hits
 
