@@ -110,7 +110,7 @@ module.exports.loop = function ()
                 break;
         }
         var curCreepCPUEnd = Game.cpu.getUsed();
-        if ((curCreepCPUEnd-curCreepCPUStart) > 5)
+        if ((curCreepCPUEnd-curCreepCPUStart) > 10)
         {
             console.log("WARNING: CURRENT CREEP (" + name + " - " + creep.memory.role + ") CPU SPIKE - " + (curCreepCPUEnd-curCreepCPUStart) + " CPU")
         }
