@@ -110,13 +110,13 @@ module.exports.loop = function ()
                 break;
         }
         var curCreepCPUEnd = Game.cpu.getUsed();
-        if ((curCreepCPUEnd-curCreepCPUStart) > 10)
+        if ((curCreepCPUEnd-curCreepCPUStart) > 8)
         {
             console.log("WARNING: CURRENT CREEP (" + name + " - " + creep.memory.role + ") CPU SPIKE - " + (curCreepCPUEnd-curCreepCPUStart) + " CPU")
         }
     }
     var endCreepCPU = Game.cpu.getUsed();
-    if ((endCreepCPU - endSpawnCPU) > 5)
+    if ((endCreepCPU - endSpawnCPU) > 10)
     {
         console.log("WARNING: CREEP CPU SPIKE - " + (endCreepCPU - endSpawnCPU) + " CPU");
     }
