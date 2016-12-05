@@ -39,30 +39,101 @@ module.exports.loop = function ()
             curRoom.memory.numUpgraders = _.sum(Game.creeps, (o) => o.memory.role =="upgrader");
             curRoom.memory.numHaulers = _.sum(Game.creeps, (o) => o.memory.role =="hauler");
 
-            if (curRoom.memory.numHarvesters < curRoom.memory.sources.length)
+            let switchRoles = false;
+            if (curRoom.memory.numHarvesters < 1)
             {
-                needCreeps = true;
-                rSpawn.run(curRoom.energyCapacityAvailable, "harvester", curRoom);
+                for (let name in Game.creeps)
+                {
+                    let creep = Game.creeps[name];
+                    if (creep.memory.role == "builder" && creep.room == curRoom)
+                    {
+                        creep.memory.role = "harvester";
+                        switchRoles = true;
+                        break;
+                    }
+                }
+                if (!switchRoles)
+                {
+                    needCreeps = true;
+                    rSpawn.run(curRoom.energyCapacityAvailable, "harvester", curRoom);
+                }
             }
             else if (curRoom.memory.numUpgraders < 1)
             {
-                needCreeps = true;
-                rSpawn.run(curRoom.energyCapacityAvailable, "upgrader", curRoom);
+                for (let name in Game.creeps)
+                {
+                    let creep = Game.creeps[name];
+                    if (creep.memory.role == "builder" && creep.room == curRoom)
+                    {
+                        creep.memory.role = "upgrader";
+                        switchRoles = true;
+                        break;
+                    }
+                }
+                if (!switchRoles)
+                {
+                    needCreeps = true;
+                    rSpawn.run(curRoom.energyCapacityAvailable, "upgrader", curRoom);
+                }
             }
-            else if (curRoom.memory.numHaulers < 1)
+            else if (curRoom.memory.numHaulers < 2)
             {
-                needCreeps = true;
-                rSpawn.run(curRoom.energyCapacityAvailable, "hauler", curRoom);
+                for (let name in Game.creeps)
+                {
+                    let creep = Game.creeps[name];
+                    if (creep.memory.role == "builder" && creep.room == curRoom)
+                    {
+                        creep.memory.role = "hauler";
+                        switchRoles = true;
+                        break;
+                    }
+                }
+                if (!switchRoles)
+                {
+                    needCreeps = true;
+                    rSpawn.run(curRoom.energyCapacityAvailable, "hauler", curRoom);
+                }
             }
             else if (curRoom.memory.numBuilders < 1)
             {
                 needCreeps = true;
                 rSpawn.run(curRoom.energyCapacityAvailable, "builder", curRoom);
             }
-            else if (curRoom.memory.numHaulers < curRoom.memory.sources.length)
+            else if (curRoom.memory.numHarvesters < 2)
             {
-                needCreeps = true;
-                rSpawn.run(curRoom.energyCapacityAvailable, "hauler", curRoom);
+                for (let name in Game.creeps)
+                {
+                    let creep = Game.creeps[name];
+                    if (creep.memory.role == "builder" && creep.room == curRoom)
+                    {
+                        creep.memory.role = "harvester";
+                        switchRoles = true;
+                        break;
+                    }
+                }
+                if (!switchRoles)
+                {
+                    needCreeps = true;
+                    rSpawn.run(curRoom.energyCapacityAvailable, "harvester", curRoom);
+                }
+            }
+            else if (curRoom.memory.numHaulers < 3)
+            {
+                for (let name in Game.creeps)
+                {
+                    let creep = Game.creeps[name];
+                    if (creep.memory.role == "builder" && creep.room == curRoom)
+                    {
+                        creep.memory.role = "hauler";
+                        switchRoles = true;
+                        break;
+                    }
+                }
+                if (!switchRoles)
+                {
+                    needCreeps = true;
+                    rSpawn.run(curRoom.energyCapacityAvailable, "hauler", curRoom);
+                }
             }
         }
     }
