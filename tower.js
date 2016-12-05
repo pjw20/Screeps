@@ -9,7 +9,7 @@ module.exports.run = function(curRoom)
         console.log("ENEMY FOUND");
         for (let tower of towers)
         {
-            tower.attack(enemyCreeps[0]);
+            tower.attack(tower.pos.findClosestByRange(enemyCreeps));
         }
     }
     else
