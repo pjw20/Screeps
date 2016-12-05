@@ -20,7 +20,7 @@ module.exports.run = function(creep, needCreeps)
         if (containers.length > 0)
         {
             let container = creep.pos.findClosestByPath(containers);
-            if (container.store[RESOURCE_ENERGY] > (container.storeCapacity / 4))
+            if (container.store[RESOURCE_ENERGY] > 250)
             {
                 creep.memory.target = container.id;
                 let result = creep.withdraw(container, RESOURCE_ENERGY);

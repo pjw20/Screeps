@@ -28,8 +28,9 @@ module.exports.run = function(creep)
             for (let target of targets)
             {
                 //console.log("Found dropped energy of amount: " + target.amount);
-                if (target.amount > 100)
+                if (target.amount > 10)
                 {
+                    //console.log(target.amount);
                     let result = creep.pickup(target);
                     if (result == ERR_NOT_IN_RANGE)
                     {
@@ -42,7 +43,7 @@ module.exports.run = function(creep)
         //get containers which within 2 squares to source
 
         let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length != 0) &&
-                                                                            (o.store[RESOURCE_ENERGY] > creep.carryCapacity) && (o.isActive() == true)});
+                                                                            (o.store[RESOURCE_ENERGY] > 100) && (o.isActive() == true)});
         if (containers.length > 0)
         {
             for (let container of containers)
