@@ -27,7 +27,7 @@ module.exports.run = function(creep)
             //there is some dropped energy
             for (let target of targets)
             {
-                console.log("Found dropped energy of amount: " + target.amount);
+                //console.log("Found dropped energy of amount: " + target.amount);
                 if (target.amount > 100)
                 {
                     let result = creep.pickup(target);
