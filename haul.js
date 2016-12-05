@@ -19,6 +19,26 @@ module.exports.run = function(creep)
             return;
         }
         //we are not full
+
+        let targets = creep.room.find(FIND_DROPPED_ENERGY);
+
+        if (targets.length > 0)
+        {
+            //there is some dropped energy
+            for (let target of targets)
+            {
+                console.log("Found dropped energy of amount: " + target.amount);
+                if (target.amount > 100)
+                {
+                    let result = creep.pickup(target);
+                    if (result == ERR_NOT_IN_RANGE)
+                    {
+                        creep.moveTo(target);
+                    }
+                    return;
+                }
+            }
+        }
         //get containers which within 2 squares to source
 
         let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length != 0) &&
@@ -54,6 +74,7 @@ module.exports.run = function(creep)
         //we are full
         if (creep.memory.target)
         {
+            //console.log("we have target - " + Game.getObjectById(creep.memory.target));
             let result = creep.transfer(Game.getObjectById(creep.memory.target), RESOURCE_ENERGY);
             if (result == ERR_NOT_IN_RANGE)
             {
@@ -74,7 +95,6 @@ module.exports.run = function(creep)
         let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION && (o.energy < o.energyCapacity)) ||
                                                                                     (o.structureType == STRUCTURE_SPAWN && (o.energy < o.energyCapacity)) ||
                                                                                     (o.structureType == STRUCTURE_TOWER && (o.energy < 200))});
-
         if (target)
         {
             creep.memory.target = target.id;
@@ -91,7 +111,7 @@ module.exports.run = function(creep)
         }
         else
         {
-            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_TOWER) && (o.energy < o.energyCapacity)});
+            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_TOWER) && (o.energy < 700)});
             if (target)
             {
                 creep.memory.target = target.id;
@@ -111,11 +131,17 @@ module.exports.run = function(creep)
                 //get containers which not within 2 squares to source
                 let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length == 0)});
                 containers.sort((a,b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
-                if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                creep.memory.target = containers[0].id;
+                let result = creep.transfer(containers[0], RESOURCE_ENERGY);
+                if (result == ERR_NOT_IN_RANGE)
                 {
                     creep.moveTo(containers[0]);
-
                 }
+                else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_FULL)
+                {
+                    creep.memory.target = 0;
+                }
+                return;
             }
         }
     }

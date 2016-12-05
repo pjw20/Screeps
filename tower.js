@@ -6,7 +6,7 @@ module.exports.run = function(curRoom)
 
     if (enemyCreeps.length > 0)
     {
-        console.log("ENEMY FOUND");
+        //console.log("ENEMY FOUND");
         for (let tower of towers)
         {
             tower.attack(tower.pos.findClosestByRange(enemyCreeps));
