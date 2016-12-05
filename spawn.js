@@ -48,11 +48,11 @@ module.exports.run = function(energy, creepRole, curRoom)
                 newCreep.push(WORK);
                 energy -= 100;
             }
-            /*if (energy >= 100)
+            if (energy >= 100)
             {
                 newCreep.push(WORK);
                 energy -= 100;
-            }*/
+            }
             if (energy >= 50)
             {
                 newCreep.push(CARRY);

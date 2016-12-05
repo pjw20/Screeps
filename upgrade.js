@@ -22,7 +22,7 @@ module.exports.run = function(creep, needCreeps)
 
             for (let container of containers)
             {
-                if (creep.pos.getRangeTo(container) < 3)
+                if (creep.pos.getRangeTo(container) < 8)
                 {
                     creep.memory.target = container.id;
                     let result = creep.withdraw(container, RESOURCE_ENERGY);
