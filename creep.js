@@ -43,7 +43,6 @@ module.exports.run = function(creep)
                 creep.say("co");
                 break;
             case "hauler":
-
                 creep.say("co");
                 break;
             default:

@@ -50,9 +50,9 @@ module.exports.loop = function ()
             curRoom.memory.numHaulers = _.sum(Game.creeps, (o) => o.memory.role =="hauler");
 
             let switchRoles = false;
-            if (curRoom.memory.numCreeps < 7)
+            if (curRoom.memory.numCreeps < 8)
             {
-                if (curRoom.memory.numHarvesters < 1)
+                if (curRoom.memory.numHarvesters < 2)
                 {
                     for (let name in Game.creeps)
                     {
@@ -111,7 +111,7 @@ module.exports.loop = function ()
                     needCreeps = true;
                     rSpawn.run(curRoom.energyCapacityAvailable, "builder", curRoom);
                 }
-                else if (curRoom.memory.numHarvesters < 2)
+                else if (curRoom.memory.numHarvesters < 3)
                 {
                     for (let name in Game.creeps)
                     {
