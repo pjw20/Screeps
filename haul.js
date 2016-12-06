@@ -43,6 +43,7 @@ module.exports.run = function(creep)
         //get containers which within 2 squares to source
 
         let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length != 0) &&
+                                                                            (o.pos.findInRange(o.room.controller, 2).length == 0) &&
                                                                             (o.store[RESOURCE_ENERGY] > 100) && (o.isActive() == true)});
         if (containers.length > 0)
         {
@@ -130,7 +131,8 @@ module.exports.run = function(creep)
             else
             {
                 //get containers which not within 2 squares to source
-                let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) && (o.pos.findInRange(FIND_SOURCES, 2).length == 0)});
+                let containers = creep.room.find(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_CONTAINER) &&
+                                                                                ((o.pos.findInRange(FIND_SOURCES, 2).length == 0) || (o.pos.findInRange(o.room.controller, 2).length != 0))});
                 containers.sort((a,b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
                 creep.memory.target = containers[0].id;
                 let result = creep.transfer(containers[0], RESOURCE_ENERGY);

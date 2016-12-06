@@ -20,7 +20,7 @@ module.exports.run = function(creep, needCreeps)
 
         for (let container of containers)
         {
-            if (creep.pos.getRangeTo(container) < 8)
+            if (creep.pos.getRangeTo(container) < 5)
             {
                 creep.memory.target = container.id;
                 let result = creep.withdraw(container, RESOURCE_ENERGY);
@@ -36,11 +36,28 @@ module.exports.run = function(creep, needCreeps)
             }
         }
 
+        let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => ((o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0) && (o.isActive() == true))});
+
+        if (target)
+        {
+            creep.memory.target = target.id;
+            let result = creep.withdraw(target, RESOURCE_ENERGY);
+            if (result == ERR_NOT_IN_RANGE)
+            {
+                creep.moveTo(target);
+            }
+            else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_NOT_ENOUGH_RESOURCES)
+            {
+                creep.memory.target = 0;
+            }
+            return;
+        }
+
         //we are not full
         if (needCreeps == false)
         {
-            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => ((o.structureType == STRUCTURE_CONTAINER) && (o.store[RESOURCE_ENERGY] > 0) && (o.isActive() == true)) ||
-                                                                                    (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && (o.energy > 1)});
+            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && (o.energy > 1)});
+
             if (target)
             {
                 creep.memory.target = target.id;
