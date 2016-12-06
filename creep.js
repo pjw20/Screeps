@@ -1,5 +1,13 @@
 module.exports.run = function(creep)
 {
+    if (creep.memory.role == "hauler")
+    {
+        if (creep.room.find(FIND_STRUCTURES, {filter: (o) => o.structureType == STRUCTURE_CONTAINER}).length == 0)
+        {
+            creep.memory.role = "harvester";
+        }
+    }
+
     if (creep.carry.energy == creep.carryCapacity)
     {
         switch (creep.memory.role)
@@ -35,6 +43,7 @@ module.exports.run = function(creep)
                 creep.say("co");
                 break;
             case "hauler":
+
                 creep.say("co");
                 break;
             default:
