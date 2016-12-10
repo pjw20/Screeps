@@ -1,5 +1,6 @@
 module.exports.run = function(energy, creepRole, curRoom)
 {
+    let targetRoom = curRoom.name;
     if (curRoom.memory.numHarvesters == 0)
     {
         energy = curRoom.energyAvailable;
@@ -29,6 +30,44 @@ module.exports.run = function(energy, creepRole, curRoom)
             if (energy >= 50)
             {
                 newCreep.push(CARRY);
+                energy -= 50;
+            }
+            if (energy >= 50)
+            {
+                newCreep.push(MOVE);
+                energy -= 50;
+            }
+        }
+    }
+
+    if (creepRole == "longharvester")
+    {
+        targetRoom = "E78S56"; //hardcoded for now
+        while (energy > 0)
+        {
+            if (energy >= 100)
+            {
+                newCreep.push(WORK);
+                energy -= 100;
+            }
+            if (energy >= 50)
+            {
+                newCreep.push(CARRY);
+                energy -= 50;
+            }
+            if (energy >= 50)
+            {
+                newCreep.push(MOVE);
+                energy -= 50;
+            }
+            if (energy >= 50)
+            {
+                newCreep.push(CARRY);
+                energy -= 50;
+            }
+            if (energy >= 50)
+            {
+                newCreep.push(MOVE);
                 energy -= 50;
             }
             if (energy >= 50)
@@ -84,5 +123,5 @@ module.exports.run = function(energy, creepRole, curRoom)
     }
 
     let spawns = curRoom.find(FIND_MY_SPAWNS);
-    spawns[0].createCreep(newCreep, {role: creepRole, working: false, homeRoom: curRoom.name, targetRoom: curRoom.name});
+    spawns[0].createCreep(newCreep, {role: creepRole, working: false, homeRoom: curRoom.name, targetRoom: targetRoom});
 };
