@@ -11,6 +11,11 @@ module.exports.run = function(energy, creepRole, curRoom)
         return;
     }
 
+    if (energy > 1400)
+    {
+        energy = 1400;
+    }
+
     if (curRoom.energyAvailable < energy)
     {
         return;
