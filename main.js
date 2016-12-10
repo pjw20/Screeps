@@ -72,16 +72,6 @@ module.exports.loop = function ()
                 }
                 else if (curRoom.memory.numUpgraders < 2)
                 {
-                    for (let name in Game.creeps)
-                    {
-                        let creep = Game.creeps[name];
-                        if (creep.memory.role == "builder" && creep.room == curRoom)
-                        {
-                            creep.memory.role = "upgrader";
-                            switchRoles = true;
-                            break;
-                        }
-                    }
                     if (!switchRoles)
                     {
                         needCreeps = true;
@@ -90,16 +80,6 @@ module.exports.loop = function ()
                 }
                 else if (curRoom.memory.numHaulers < 2 && curRoom.find(FIND_STRUCTURES, {filter: (o) => o.structureType == STRUCTURE_CONTAINER}).length > 0)
                 {
-                    for (let name in Game.creeps)
-                    {
-                        let creep = Game.creeps[name];
-                        if (creep.memory.role == "builder" && creep.room == curRoom)
-                        {
-                            creep.memory.role = "hauler";
-                            switchRoles = true;
-                            break;
-                        }
-                    }
                     if (!switchRoles)
                     {
                         needCreeps = true;
@@ -110,24 +90,6 @@ module.exports.loop = function ()
                 {
                     needCreeps = true;
                     rSpawn.run(curRoom.energyCapacityAvailable, "builder", curRoom);
-                }
-                else if (curRoom.memory.numHarvesters < 3)
-                {
-                    for (let name in Game.creeps)
-                    {
-                        let creep = Game.creeps[name];
-                        if (creep.memory.role == "builder" && creep.room == curRoom)
-                        {
-                            creep.memory.role = "harvester";
-                            switchRoles = true;
-                            break;
-                        }
-                    }
-                    if (!switchRoles)
-                    {
-                        needCreeps = true;
-                        rSpawn.run(curRoom.energyCapacityAvailable, "harvester", curRoom);
-                    }
                 }
             }
         }
