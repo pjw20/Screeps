@@ -13,11 +13,11 @@ module.exports.run = function(creep)
             if (creep.room != creep.memory.homeRoom)
             {
                 //we arent at home
-                let enemyCreeps = curRoom.find(FIND_HOSTILE_CREEPS);
+                let enemyCreeps = creep.room.find(FIND_HOSTILE_CREEPS);
                 if (enemyCreeps.length > 0)
                 {
                     //there's an enemy in here with us
-                    
+
                 }
             }
             let source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
