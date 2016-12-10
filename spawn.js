@@ -20,7 +20,7 @@ module.exports.run = function(energy, creepRole, curRoom)
 
     if (creepRole == "harvester" || creepRole == "builder")
     {
-        while (energy > 0)
+        while (energy >= 50)
         {
             if (energy >= 100)
             {
@@ -43,8 +43,7 @@ module.exports.run = function(energy, creepRole, curRoom)
     if (creepRole == "longharvester")
     {
         targetRoom = "E78S56"; //hardcoded for now
-        console.log(energy);
-        /*while (energy > 0)
+        while (energy >= 50)
         {
             if (energy >= 100)
             {
@@ -81,12 +80,12 @@ module.exports.run = function(energy, creepRole, curRoom)
                 newCreep.push(ATTACK);
                 energy -= 80;
             }
-        }*/
+        }
     }
 
     if (creepRole == "upgrader")
     {
-        while (energy > 0)
+        while (energy >= 50)
         {
             if (energy >= 100)
             {
@@ -113,7 +112,7 @@ module.exports.run = function(energy, creepRole, curRoom)
 
     if (creepRole == "hauler")
     {
-        while (energy > 0)
+        while (energy >= 50)
         {
             if (energy >= 50)
             {
