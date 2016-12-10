@@ -75,6 +75,11 @@ module.exports.run = function(energy, creepRole, curRoom)
                 newCreep.push(MOVE);
                 energy -= 50;
             }
+            if (energy >= 50)
+            {
+                newCreep.push(MOVE);
+                energy -= 50;
+            }
             if (energy >= 80)
             {
                 newCreep.push(ATTACK);

@@ -17,7 +17,10 @@ module.exports.run = function(creep)
                 if (enemyCreeps.length > 0)
                 {
                     //there's an enemy in here with us
-                    console.log(creep.pos.getRangeTo(creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS)));
+                    if (creep.pos.getRangeTo(creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS)) < 2)
+                    {
+                        //it's right next to us!
+                    }
                 }
             }
             let source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
