@@ -84,5 +84,5 @@ module.exports.run = function(energy, creepRole, curRoom)
     }
 
     let spawns = curRoom.find(FIND_MY_SPAWNS);
-    spawns[0].createCreep(newCreep, {role: creepRole, working: false, room: curRoom.name});
+    spawns[0].createCreep(newCreep, {role: creepRole, working: false, homeRoom: curRoom.name, targetRoom: curRoom.name});
 };

@@ -50,7 +50,7 @@ module.exports.loop = function ()
             curRoom.memory.numHaulers = _.sum(Game.creeps, (o) => o.memory.role =="hauler");
 
             let switchRoles = false;
-            if (curRoom.memory.numCreeps < 8)
+            if (curRoom.memory.numCreeps < 7)
             {
                 if (curRoom.memory.numHarvesters < 2)
                 {
