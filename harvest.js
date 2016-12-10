@@ -16,6 +16,10 @@ module.exports.run = function(creep)
                 creep.moveTo(source);
             }
         }
+        else
+        {
+            creep.moveTo(new RoomPosition(25, 25, creep.memory.targetRoom));
+        }
     }
     else
     {
@@ -61,6 +65,10 @@ module.exports.run = function(creep)
                     }
                 }
             }
+        }
+        else
+        {
+            creep.moveTo(new RoomPosition(25, 25, creep.memory.homeRoom));
         }
     }
 };

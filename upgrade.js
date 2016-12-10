@@ -53,7 +53,6 @@ module.exports.run = function(creep, needCreeps)
             return;
         }
 
-        //we are not full
         if (needCreeps == false)
         {
             let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION || o.structureType == STRUCTURE_SPAWN) && (o.energy > 5)});
