@@ -40,7 +40,7 @@ module.exports.run = function(energy, creepRole, curRoom)
         }
     }
 
-    if (creepRole == "longharvester")
+   /* if (creepRole == "longharvester")
     {
         targetRoom = "E78S56"; //hardcoded for now
         while (energy > 0)
@@ -81,7 +81,7 @@ module.exports.run = function(energy, creepRole, curRoom)
                 energy -= 80;
             }
         }
-    }
+    }*/
 
     if (creepRole == "upgrader")
     {

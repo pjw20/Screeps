@@ -44,6 +44,8 @@ module.exports.loop = function ()
 
             //find number of sources
             curRoom.memory.sources = curRoom.find(FIND_SOURCES);
+
+            //this needs changing for multi room
             curRoom.memory.numHarvesters = _.sum(Game.creeps, (o) => o.memory.role =="harvester");
             curRoom.memory.numBuilders = _.sum(Game.creeps, (o) => o.memory.role =="builder");
             curRoom.memory.numUpgraders = _.sum(Game.creeps, (o) => o.memory.role =="upgrader");
