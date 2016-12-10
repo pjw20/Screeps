@@ -70,6 +70,11 @@ module.exports.run = function(creep)
             }
             return;
         }
+        else if (creep.carry.energy > 50)
+        {
+            //cant get any more but might as well dump what we have
+            creep.memory.working = true;
+        }
     }
     else
     {
