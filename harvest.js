@@ -4,7 +4,7 @@ module.exports.run = function(creep)
     {
         if (creep.memory.targetRoom == undefined)
         {
-            creep.memory.targetRoom = creep.room;
+            creep.memory.targetRoom = creep.room.name;
         }
 
         if (creep.room == creep.memory.targetRoom)
