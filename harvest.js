@@ -10,7 +10,7 @@ module.exports.run = function(creep)
         if (creep.room.name == creep.memory.targetRoom)
         {
             //we are not full
-            if (creep.room != creep.memory.homeRoom)
+            if (creep.room.name != creep.memory.homeRoom)
             {
                 //we arent at home
                 let enemyCreeps = creep.room.find(FIND_HOSTILE_CREEPS);
