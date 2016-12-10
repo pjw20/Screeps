@@ -118,6 +118,9 @@ module.exports.loop = function ()
             case "harvester":
                 rHarvest.run(creep);
                 break;
+            case "longharvester":
+                rHarvest.run(creep);
+                break;
             case "builder":
                 rBuild.run(creep, needCreeps);
                 break;
