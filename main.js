@@ -53,7 +53,7 @@ module.exports.loop = function ()
             curRoom.memory.numLongHarvesters = _.sum(Game.creeps, (o) => o.memory.role =="longharvester");
 
             let switchRoles = false;
-            if (curRoom.memory.numCreeps < 8)
+            if (curRoom.memory.numCreeps < 7)
             {
                 if (curRoom.memory.numHarvesters < 2)
                 {
@@ -81,7 +81,7 @@ module.exports.loop = function ()
                         rSpawn.run(curRoom.energyCapacityAvailable, "upgrader", curRoom);
                     }
                 }
-                else if (curRoom.memory.numHaulers < 2 && curRoom.find(FIND_STRUCTURES, {filter: (o) => o.structureType == STRUCTURE_CONTAINER}).length > 0)
+                else if (curRoom.memory.numHaulers < 1 && curRoom.find(FIND_STRUCTURES, {filter: (o) => o.structureType == STRUCTURE_CONTAINER}).length > 0)
                 {
                     if (!switchRoles)
                     {
