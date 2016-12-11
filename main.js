@@ -12,7 +12,6 @@ let rTower = require("tower");
 module.exports.loop = function ()
 {
     var startCPU = Game.cpu.getUsed();
-    let needCreeps = false;
     //delete old creep memory
     for(let name in Memory.creeps)
     {
@@ -30,6 +29,8 @@ module.exports.loop = function ()
         {
             //we own the room
             Memory.numRoomsOwned++;
+
+            curRoom.memory.needCreeps = false;
 
             rTower.run(curRoom);
             curRoom.memory.numCreeps = 0;
@@ -59,7 +60,7 @@ module.exports.loop = function ()
                 {
                     if (!switchRoles)
                     {
-                        needCreeps = true;
+                        curRoom.memory.needCreeps = true;
                         rSpawn.run(curRoom.energyCapacityAvailable, "harvester", curRoom);
                     }
                 }
@@ -67,7 +68,7 @@ module.exports.loop = function ()
                 {
                     if (!switchRoles)
                     {
-                        needCreeps = true;
+                        curRoom.memory.needCreeps = true;
                         rSpawn.run(curRoom.energyCapacityAvailable, "upgrader", curRoom);
                     }
                 }
@@ -75,18 +76,18 @@ module.exports.loop = function ()
                 {
                     if (!switchRoles)
                     {
-                        needCreeps = true;
+                        curRoom.memory.needCreeps = true;
                         rSpawn.run(curRoom.energyCapacityAvailable, "hauler", curRoom);
                     }
                 }
                 else if (curRoom.memory.numBuilders < 1)
                 {
-                    needCreeps = true;
+                    curRoom.memory.needCreeps = true;
                     rSpawn.run(curRoom.energyCapacityAvailable, "builder", curRoom);
                 }
                 else if (curRoom.memory.numLongHarvesters < 1)
                 {
-                    needCreeps = true;
+                    curRoom.memory.needCreeps = true;
                     rSpawn.run(curRoom.energyCapacityAvailable, "longharvester", curRoom);
                 }
             }
@@ -112,10 +113,10 @@ module.exports.loop = function ()
                 rHarvest.run(creep);
                 break;
             case "builder":
-                rBuild.run(creep, needCreeps);
+                rBuild.run(creep);
                 break;
             case "upgrader":
-                rUpgrade.run(creep, needCreeps);
+                rUpgrade.run(creep);
                 break;
             case "hauler":
                 rHaul.run(creep);
