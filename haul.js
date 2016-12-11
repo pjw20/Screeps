@@ -116,7 +116,7 @@ module.exports.run = function(creep)
             return;
         }
 
-        let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION && (o.energy < o.energyCapacity)) ||
+        target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION && (o.energy < o.energyCapacity)) ||
                                                                                     (o.structureType == STRUCTURE_SPAWN && (o.energy < o.energyCapacity)) ||
                                                                                     (o.structureType == STRUCTURE_TOWER && (o.energy < 200))});
         if (target)
@@ -135,7 +135,7 @@ module.exports.run = function(creep)
         }
         else
         {
-            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_TOWER) && (o.energy < 700)});
+            target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_TOWER) && (o.energy < 700)});
             if (target)
             {
                 creep.memory.target = target.id;
