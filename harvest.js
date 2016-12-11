@@ -20,6 +20,7 @@ module.exports.run = function(creep)
                     if (creep.pos.getRangeTo(creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS)) < 2)
                     {
                         //it's right next to us!
+
                     }
                 }
             }

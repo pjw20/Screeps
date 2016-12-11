@@ -99,6 +99,23 @@ module.exports.run = function(creep)
             creep.pos.createConstructionSite(STRUCTURE_ROAD);
         }
 
+        let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_TOWER && (o.energy < 10))});
+
+        if (target)
+        {
+            creep.memory.target = target.id;
+            let result = creep.transfer(target, RESOURCE_ENERGY);
+            if (result == ERR_NOT_IN_RANGE)
+            {
+                creep.moveTo(target);
+            }
+            else if (result == OK || result == ERR_INVALID_TARGET || result == ERR_FULL)
+            {
+                creep.memory.target = 0;
+            }
+            return;
+        }
+
         let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (o) => (o.structureType == STRUCTURE_EXTENSION && (o.energy < o.energyCapacity)) ||
                                                                                     (o.structureType == STRUCTURE_SPAWN && (o.energy < o.energyCapacity)) ||
                                                                                     (o.structureType == STRUCTURE_TOWER && (o.energy < 200))});
