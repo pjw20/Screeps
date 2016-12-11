@@ -29,13 +29,16 @@ module.exports.run = function(creep)
                 creep.say("hv");
                 break;
             case "builder":
-                creep.say("co");
+                creep.say("bco");
                 break;
             case "upgrader":
-                creep.say("co");
+                creep.say("uco");
                 break;
             case "hauler":
-                creep.say("co");
+                creep.say("hco");
+                break;
+            case "claimer":
+                creep.say("cl");
                 break;
             default:
                 break;

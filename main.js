@@ -43,9 +43,9 @@ module.exports.loop = function ()
             }
 
             //find number of sources
-            curRoom.memory.sources = curRoom.find(FIND_SOURCES);
+            //curRoom.memory.sources = curRoom.find(FIND_SOURCES);
 
-            //this needs changing for multi room
+
             curRoom.memory.numHarvesters = _.sum(Game.creeps, (o) => o.memory.role =="harvester" && o.memory.homeRoom == curRoom.name);
             curRoom.memory.numBuilders = _.sum(Game.creeps, (o) => o.memory.role =="builder" && o.memory.homeRoom == curRoom.name);
             curRoom.memory.numUpgraders = _.sum(Game.creeps, (o) => o.memory.role =="upgrader" && o.memory.homeRoom == curRoom.name);
@@ -57,16 +57,6 @@ module.exports.loop = function ()
             {
                 if (curRoom.memory.numHarvesters < 2)
                 {
-                    for (let name in Game.creeps)
-                    {
-                        let creep = Game.creeps[name];
-                        if (creep.memory.role == "builder" && creep.room == curRoom)
-                        {
-                            creep.memory.role = "harvester";
-                            switchRoles = true;
-                            break;
-                        }
-                    }
                     if (!switchRoles)
                     {
                         needCreeps = true;
@@ -133,6 +123,22 @@ module.exports.loop = function ()
             case "repairer":
                 rRepair.run(creep);
                 break;
+            case "claimer":
+                break;
+                if (creep.room.name == creep.memory.targetRoom)
+                {
+                    if(creep.room.controller)
+                    {
+                        if(creep.claimController(creep.room.controller) == ERR_NOT_IN_RANGE)
+                        {
+                            creep.moveTo(creep.room.controller);
+                        }
+                    }
+                }
+                else
+                {
+                    creep.moveTo(new RoomPosition(25, 25, creep.memory.targetRoom));
+                }
             default:
                 break;
         }
