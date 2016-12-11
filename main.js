@@ -124,7 +124,6 @@ module.exports.loop = function ()
                 rRepair.run(creep);
                 break;
             case "claimer":
-                break;
                 if (creep.room.name == creep.memory.targetRoom)
                 {
                     if(creep.room.controller)
@@ -139,6 +138,7 @@ module.exports.loop = function ()
                 {
                     creep.moveTo(new RoomPosition(25, 25, creep.memory.targetRoom));
                 }
+                break;
             default:
                 break;
         }
