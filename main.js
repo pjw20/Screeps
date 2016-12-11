@@ -46,11 +46,11 @@ module.exports.loop = function ()
             curRoom.memory.sources = curRoom.find(FIND_SOURCES);
 
             //this needs changing for multi room
-            curRoom.memory.numHarvesters = _.sum(Game.creeps, (o) => o.memory.role =="harvester");
-            curRoom.memory.numBuilders = _.sum(Game.creeps, (o) => o.memory.role =="builder");
-            curRoom.memory.numUpgraders = _.sum(Game.creeps, (o) => o.memory.role =="upgrader");
-            curRoom.memory.numHaulers = _.sum(Game.creeps, (o) => o.memory.role =="hauler");
-            curRoom.memory.numLongHarvesters = _.sum(Game.creeps, (o) => o.memory.role =="longharvester");
+            curRoom.memory.numHarvesters = _.sum(Game.creeps, (o) => o.memory.role =="harvester" && o.memory.homeRoom == curRoom.name);
+            curRoom.memory.numBuilders = _.sum(Game.creeps, (o) => o.memory.role =="builder" && o.memory.homeRoom == curRoom.name);
+            curRoom.memory.numUpgraders = _.sum(Game.creeps, (o) => o.memory.role =="upgrader" && o.memory.homeRoom == curRoom.name);
+            curRoom.memory.numHaulers = _.sum(Game.creeps, (o) => o.memory.role =="hauler" && o.memory.homeRoom == curRoom.name);
+            curRoom.memory.numLongHarvesters = _.sum(Game.creeps, (o) => o.memory.role =="longharvester" && o.memory.homeRoom == curRoom.name);
 
             let switchRoles = false;
             if (curRoom.memory.numCreeps < 7)
