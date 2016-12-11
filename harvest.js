@@ -42,6 +42,22 @@ module.exports.run = function(creep)
             creep.memory.homeRoom = creep.room.name;
         }
 
+        //we are not full
+        if (creep.room.name != creep.memory.homeRoom)
+        {
+            //we arent at home
+            let enemyCreeps = creep.room.find(FIND_HOSTILE_CREEPS);
+            if (enemyCreeps.length > 0)
+            {
+                //there's an enemy in here with us
+                if (creep.pos.getRangeTo(creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS)) < 2)
+                {
+                    //it's right next to us!
+                    creep.attack(creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS));
+                }
+            }
+        }
+
         if (creep.room.name == creep.memory.homeRoom)
         {
             //we are full
