@@ -85,7 +85,7 @@ module.exports.loop = function ()
                     curRoom.memory.needCreeps = true;
                     rSpawn.run(curRoom.energyCapacityAvailable, "builder", curRoom);
                 }
-                else if (curRoom.memory.numLongHarvesters < 1)
+                else if (curRoom.memory.numLongHarvesters < 1 && curRoom.name == "E79S56")
                 {
                     curRoom.memory.needCreeps = true;
                     rSpawn.run(curRoom.energyCapacityAvailable, "longharvester", curRoom);

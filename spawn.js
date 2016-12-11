@@ -7,7 +7,7 @@ module.exports.run = function(energy, creepRole, curRoom)
     }
     if (energy < 200)
     {
-        console.log("We can't make a creep with so little energy, wait a bit");
+        //console.log("We can't make a creep with so little energy, wait a bit");
         return;
     }
 
